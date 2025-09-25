@@ -16,7 +16,7 @@ import {
   Event as EventIcon,
   People
 } from '@mui/icons-material';
-import { CyberEvent } from '../../types/event';
+import type { CyberEvent } from '../../types/event';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import 'leaflet/dist/leaflet.css';

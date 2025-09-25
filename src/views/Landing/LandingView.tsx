@@ -14,7 +14,7 @@ import { Security, LocationOn, Event as EventIcon } from '@mui/icons-material';
 import EventMap from '../../components/Map/EventMap';
 import EventFiltersComponent from '../../components/Filters/EventFilters';
 import { mockEvents } from '../../data/mockEvents';
-import { CyberEvent, EventFilters } from '../../types/event';
+import type { CyberEvent, EventFilters } from '../../types/event';
 import { useNavigate } from 'react-router-dom';
 
 const LandingView: React.FC = () => {
