@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LandingView from "../views/Landing/LandingView";
+import EventDetailView from "../views/Event/EventDetailView";
 import LoginView from "../views/Authentication/LoginView";
 import DashboardView from "../views/Dashboard/DashboardView";
 import AnalyticsView from "../views/Analytics/AnalyticsView";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'font-test',
         element: <FontTester />
+      },
+      {
+        path: 'event/:id',
+        element: <EventDetailView />
       },
       {
         index: true,
