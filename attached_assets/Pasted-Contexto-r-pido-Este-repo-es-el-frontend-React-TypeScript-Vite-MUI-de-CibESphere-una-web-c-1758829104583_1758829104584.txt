@@ -1,0 +1,82 @@
+Contexto rápido:
+Este repo es el frontend (React + TypeScript + Vite + MUI) de CibESphere, una web comunidad de ciberseguridad en España. El backend está en otro repo (Go). He clonado una copia para pruebas; puedes hacer cambios libres en esta copia.
+
+Info del backend (útil para integrar localmente):
+En el backend hay un Makefile con comandos: make setup, make dev (levanta Go), make docker-up (levanta Postgres, Redis, pgAdmin, doc most), make db-seed para poblar usuarios. Puertos de dev: PostgreSQL 5432, Redis 6379, pgAdmin 5050. Usa estas rutas como referencia para VITE_API_BASE_URL.
+
+Usuarios seed (para pruebas):
+
+admin@cybesphere.local
+ / Admin123! (Admin)
+
+organizer@cybesphere.local
+ / Organizer123! (Organizer)
+
+attendee@cybesphere.local
+ / Attendee123! (Attendee)
+
+Reglas/convenciones:
+
+Usa la variable de entorno VITE_API_BASE_URL para todas las llamadas API. Añade un .env.example.
+
+Si algún endpoint backend no existe, implementa un mock local (p. ej. usando localStorage o un fichero JSON) y documenta el mock en la PR.
+
+Documenta todas las libs nuevas y por qué las usas en la descripción de la PR.
+
+Prioriza rendimiento (clusters en mapa, lazy-loading logos) y estética minimalista: base blanca + acentos cyan (tema ciber).
+
+Objetivo MVP (prioridad alta → baja):
+
+Landing (vista inicial): mapa centrado en España (ej. Leaflet o Mapbox GL) con marcadores y clusters; marcadores con logos y popup con título, fecha, ciudad y botón “Ver evento”. Filtros por comunidad/provincia, rango de fechas y tags.
+
+Página de evento: detalle con logo, fechas, descripción, mapa de ubicación y botón “Suscribirme/Avísame”.
+
+Auth básica: login + registro que integren con backend si hay endpoints; guardar token en localStorage; AuthProvider para rutas protegidas.
+
+Panel Organizer: formulario para crear/editar eventos (title, desc, fechas, lat/lng o seleccionar en mapa, logo upload, tags). Upload intentará POST ${VITE_API_BASE_URL}/uploads; si no existe, fallback base64 y documentar.
+
+Suscripciones: POST ${VITE_API_BASE_URL}/subscriptions con {email,eventId?,regions?:[]}; fallback a mock. Añadir opción de recordatorio X días antes.
+
+.env.example, README con pasos para ejecutar y conectar al backend (ej. VITE_API_BASE_URL=http://localhost:8080), y capturas/screenshots de cada PR.
+
+Contrato API esperado (si existe, úsalo; si no, mockea):
+
+POST /api/auth/login {email,password} → { token, user:{email,role} }
+
+POST /api/auth/register {email,password} → { user }
+
+GET /api/events → [{ id, title, description, startDate, endDate, location:{lat,lng,city,region}, logoUrl, organizer:{name,email}, tags:[] }]
+
+GET /api/events/:id → event object
+
+POST /api/events (organizer) → created event
+
+PATCH/DELETE /api/events/:id (organizer/admin)
+
+POST /api/uploads multipart → { url }
+
+POST /api/subscriptions { email, eventId?, regions?:[] } → 200
+
+Entregables por fases / PRs (cada PR con título y checklist):
+
+PR1: feat(map): landing con mapa, markers y filtros — mapa funcional, marcadores y filtros UI.
+
+PR2: feat(event): página detalle + subscribe — detalle completo y formulario de suscripción (mock o real).
+
+PR3: feat(auth): login/register + AuthProvider — login con seeds y control de roles.
+
+PR4: feat(organizer): form crear/editar evento + upload fallback — crear evento visible en landing.
+
+PR5: docs: .env.example, README y replit.md — instrucciones de ejecución y cómo conectar al backend.
+
+Criterios de aceptación (smoke tests):
+
+La landing carga el mapa y muestra marcadores.
+
+Al clickar un marcador se ve popup y se puede ir al detalle del evento.
+
+Login con organizer@... permite crear evento que aparece en el mapa (mock o real).
+
+Suscripción a evento devuelve confirmación (y guarda en mock o responde 200).
+
+Prioridad inmediata: empieza por PR1 — implementar el mapa con markers y filtros, añadir lazy-loading de logos, y documentar cómo consumir GET /api/events. Ejecuta npm ci e instala react-leaflet (u mapbox-gl) si lo consideras necesario y justifica la elección. Adjunta capturas en la PR. Gracias.
