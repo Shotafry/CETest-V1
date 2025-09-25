@@ -11,7 +11,6 @@ import {
   Avatar,
   Divider,
   Card,
-  Grid,
   Alert,
   CircularProgress,
   IconButton
@@ -175,9 +174,9 @@ const EventDetailView: React.FC = () => {
       </Box>
 
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Grid container spacing={4}>
+        <Stack direction={{ xs: 'column', md: 'row' }} spacing={4}>
           {/* Main Content */}
-          <Grid size={{ xs: 12, md: 8 }}>
+          <Box sx={{ flex: { xs: 1, md: 2 } }}>
             {/* Event Header */}
             <Paper elevation={2} sx={{ p: 4, mb: 3 }}>
               <Stack direction="row" spacing={3} alignItems="flex-start" mb={3}>
@@ -300,10 +299,10 @@ const EventDetailView: React.FC = () => {
                 <EventLocationMap event={event} />
               </Box>
             </Paper>
-          </Grid>
+          </Box>
 
           {/* Sidebar */}
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Box sx={{ flex: { xs: 1, md: 1 }, minWidth: { md: '300px' } }}>
             {/* Subscription Form */}
             <Paper elevation={2} sx={{ p: 3, position: 'sticky', top: 24 }}>
               <Typography variant="h6" gutterBottom color="primary">
@@ -314,8 +313,8 @@ const EventDetailView: React.FC = () => {
               </Typography>
               <SubscriptionForm eventId={event.id} eventTitle={event.title} />
             </Paper>
-          </Grid>
-        </Grid>
+          </Box>
+        </Stack>
       </Container>
     </Box>
   );

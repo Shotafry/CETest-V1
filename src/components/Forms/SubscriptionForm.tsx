@@ -13,7 +13,8 @@ import {
   Divider,
   MenuItem,
   Select,
-  InputLabel
+  InputLabel,
+  InputAdornment
 } from '@mui/material';
 import {
   Email,
@@ -38,7 +39,7 @@ interface SubscriptionData {
   };
 }
 
-const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ eventId }) => {
+const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ eventId, eventTitle }) => {
   const [formData, setFormData] = useState<SubscriptionData>({
     email: '',
     eventId,
@@ -172,8 +173,11 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ eventId }) => {
         <Typography variant="h6" color="success.main" gutterBottom>
           ¡Suscripción exitosa!
         </Typography>
-        <Typography variant="body2" color="text.secondary" mb={3}>
-          Te enviaremos recordatorios y actualizaciones sobre este evento.
+        <Typography variant="body2" color="text.secondary" mb={1}>
+          Te enviaremos recordatorios y actualizaciones sobre:
+        </Typography>
+        <Typography variant="body2" color="primary" fontWeight="medium" mb={3}>
+          "{eventTitle}"
         </Typography>
         <Button
           variant="outlined"
@@ -199,7 +203,11 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ eventId }) => {
           required
           variant="outlined"
           InputProps={{
-            startAdornment: <Email color="action" sx={{ mr: 1 }} />
+            startAdornment: (
+              <InputAdornment position="start">
+                <Email color="action" />
+              </InputAdornment>
+            )
           }}
           helperText="Usaremos tu email solo para notificaciones de este evento"
         />
