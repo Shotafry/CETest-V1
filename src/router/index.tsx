@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import LandingView from "../views/Landing/LandingView";
 import LoginView from "../views/Authentication/LoginView";
 import DashboardView from "../views/Dashboard/DashboardView";
 import AnalyticsView from "../views/Analytics/AnalyticsView";
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         index: true,
-        element: <DashboardView />
+        element: <LandingView />
       }
     ]
   },

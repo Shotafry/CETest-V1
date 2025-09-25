@@ -4,15 +4,15 @@ import { createTheme } from '@mui/material/styles';
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#00bcd4', // Cyan principal
+      light: '#62efff',
+      dark: '#008ba3',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#9c27b0',
-      light: '#ba68c8',
-      dark: '#7b1fa2',
+      main: '#0097a7', // Cyan más oscuro
+      light: '#5ac8d8',
+      dark: '#006978',
       contrastText: '#fff',
     },
     error: {
