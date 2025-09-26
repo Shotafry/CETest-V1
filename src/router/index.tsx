@@ -10,6 +10,8 @@ import FontTester from "../views/FontTester";
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
+import EventFormView from "../views/Organizer/EventFormView";
+import OrganizerEventsView from "../views/Organizer/OrganizerEventsView";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,30 @@ const router = createBrowserRouter([
       {
         path: 'font-test',
         element: <FontTester />
+      },
+      {
+        path: 'organizer/events',
+        element: (
+          <ProtectedRoute requiredRole="organizer">
+            <OrganizerEventsView />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'organizer/events/new',
+        element: (
+          <ProtectedRoute requiredRole="organizer">
+            <EventFormView />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'organizer/events/edit/:id',
+        element: (
+          <ProtectedRoute requiredRole="organizer">
+            <EventFormView />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'event/:id',

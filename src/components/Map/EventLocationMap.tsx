@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { Typography, Box, Stack } from '@mui/material';
 import { LocationOn } from '@mui/icons-material';
@@ -8,6 +8,8 @@ import 'leaflet/dist/leaflet.css';
 
 interface EventLocationMapProps {
   event: CyberEvent;
+  onMapClick?: (lat: number, lng: number) => void;
+  allowClick?: boolean;
 }
 
 // Custom marker icon for event location
@@ -19,7 +21,18 @@ const createLocationIcon = (logoUrl: string) => new Icon({
   className: 'location-marker-icon'
 });
 
-const EventLocationMap: React.FC<EventLocationMapProps> = ({ event }) => {
+function MapClickHandler({ onMapClick }: { onMapClick?: (lat: number, lng: number) => void }) {
+  useMapEvents({
+    click(e) {
+      if (onMapClick) {
+        onMapClick(e.latlng.lat, e.latlng.lng);
+      }
+    },
+  });
+  return null;
+}
+
+const EventLocationMap: React.FC<EventLocationMapProps> = ({ event, onMapClick, allowClick = false }) => {
   useEffect(() => {
     // Add custom styles for the location marker
     const style = document.createElement('style');
@@ -59,9 +72,14 @@ const EventLocationMap: React.FC<EventLocationMapProps> = ({ event }) => {
     <MapContainer
       center={[event.location.lat, event.location.lng]}
       zoom={15}
-      style={{ height: '100%', width: '100%' }}
+      style={{ 
+        height: '100%', 
+        width: '100%',
+        cursor: allowClick ? 'crosshair' : 'grab'
+      }}
       zoomControl={true}
     >
+      {allowClick && <MapClickHandler onMapClick={onMapClick} />}
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

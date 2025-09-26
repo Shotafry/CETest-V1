@@ -26,7 +26,12 @@ export interface CyberEvent {
   attendeesCount?: number;
   maxAttendees?: number;
   isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
+
+// Alias para compatibilidad
+export type Event = CyberEvent;
 
 export interface EventFilters {
   regions: string[];
