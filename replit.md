@@ -18,8 +18,37 @@ CibESphere es una plataforma web para la comunidad de ciberseguridad en España.
 - Tema ciber con colores cyan
 - Datos mock de eventos reales
 
+✅ **PR2 Completado**: Página detalle + suscripción
+- Vista completa de eventos con mapa de ubicación
+- Formulario de suscripción con validación
+- Integración con mock/API para suscripciones
+- Navegación desde marcadores del mapa
+
+✅ **PR3 Completado**: Auth completa con roles
+- Login/Register con usuarios seed
+- AuthContext y AuthProvider global
+- Protección de rutas por autenticación y roles
+- Integración con localStorage para persistencia
+- Navegación automática post-login
+
 ## Recent Changes
-**Fecha: 2024-09-25**
+**Fecha: 2025-09-26 - PR3 Auth System**
+- ✅ Implementado AuthContext con gestión global de estado
+- ✅ LoginView funcional con usuarios seed integrados
+- ✅ RegisterView con validación y selección de roles
+- ✅ ProtectedRoute component para rutas privadas
+- ✅ Integración router con protección por roles
+- ✅ Persistencia auth en localStorage
+- ✅ Navegación automática post-login/logout
+
+**Fecha: 2024-09-25 - PR2 Event Details**
+- ✅ EventDetailView con información completa
+- ✅ SubscriptionForm con validación email
+- ✅ Integración mapa ubicación en detalle evento
+- ✅ Mock/API fallback para suscripciones
+- ✅ Navegación desde landing a detalle
+
+**Fecha: 2024-09-25 - PR1 Landing**
 - Configurado Vite para entorno Replit (puerto 5000, hosts permitidos)
 - Implementada landing page con mapa de España
 - Agregados componentes de mapa y filtros
@@ -31,13 +60,36 @@ CibESphere es una plataforma web para la comunidad de ciberseguridad en España.
 ```
 src/
 ├── components/
+│   ├── auth/
+│   │   └── ProtectedRoute.tsx    # HOC para protección de rutas
+│   ├── common/
+│   │   └── CustomCard.tsx        # Componente card reutilizable
+│   ├── Forms/
+│   │   └── SubscriptionForm.tsx  # Formulario suscripción eventos
 │   ├── Map/
-│   │   └── EventMap.tsx          # Componente del mapa con marcadores
+│   │   ├── EventMap.tsx          # Mapa principal con marcadores
+│   │   └── EventLocationMap.tsx  # Mapa ubicación específica
 │   └── Filters/
 │       └── EventFilters.tsx      # Filtros de eventos
+├── contexts/
+│   └── AuthContext.tsx           # Context global de autenticación
 ├── views/
-│   └── Landing/
-│       └── LandingView.tsx       # Página principal
+│   ├── Authentication/
+│   │   ├── LoginView.tsx         # Vista de login
+│   │   └── RegisterView.tsx      # Vista de registro
+│   ├── Event/
+│   │   └── EventDetailView.tsx   # Detalle completo de evento
+│   ├── Landing/
+│   │   └── LandingView.tsx       # Página principal con mapa
+│   ├── Dashboard/
+│   │   └── DashboardView.tsx     # Panel usuario autenticado
+│   ├── Analytics/
+│   │   └── AnalyticsView.tsx     # Panel organizador (protegido)
+│   └── Settings/
+│       └── SettingsView.tsx      # Configuración usuario
+├── layouts/
+│   ├── MainLayout.tsx            # Layout principal con navegación
+│   └── AuthLayout.tsx            # Layout para auth (login/register)
 ├── types/
 │   └── event.ts                  # Tipos de eventos
 ├── data/
@@ -55,16 +107,25 @@ VITE_MAP_DEFAULT_ZOOM=6
 ```
 
 ## Próximos Pasos (Roadmap)
-**PR2**: Página de detalle de evento + suscripción
-**PR3**: Autenticación (login/register) + AuthProvider  
-**PR4**: Panel organizador (crear/editar eventos)
-**PR5**: Documentación completa + README
+**PR4 NEXT**: Panel organizador (crear/editar eventos)
+- Formulario crear evento con mapa selector ubicación
+- Upload logos con fallback base64
+- Gestión eventos propios del organizador
+- Validación roles y permisos
+
+**PR5**: Documentación completa + .env.example
+- README con setup e instrucciones backend
+- .env.example con todas las variables
+- Screenshots y demos de funcionalidades
 
 ## User Preferences
 - Priorizar rendimiento (clustering, lazy-loading)
 - Estética minimalista: base blanca + acentos cyan
 - Usar VITE_API_BASE_URL para APIs
 - Implementar mocks si backend no existe
+- Auth con usuarios seed para desarrollo
+- Protección rutas por roles (admin > organizer > attendee)
+- Persistencia estado en localStorage
 - Documentar cambios en PRs
 
 ## Development Setup
@@ -81,9 +142,23 @@ npm run dev  # Ejecuta en puerto 5000 para Replit
 - `POST /api/uploads` → Subir logos
 
 ## Key Features Implemented
+### PR1 - Landing & Map
 - 🗺️ Mapa interactivo centrado en España
 - 📍 Marcadores de eventos con clustering
-- 🔍 Filtros por región, fechas y categorías  
+- 🔍 Filtros por región, fechas y categorías
 - 🎨 Tema ciber con colores cyan
 - 📱 Diseño responsive
+
+### PR2 - Event Details
+- 📄 Vista detalle completa de eventos
+- 📧 Formulario suscripción con validación
+- 🗺️ Mapa ubicación específica del evento
+- 🔄 Mock/API fallback para suscripciones
+
+### PR3 - Authentication
+- 🔐 Login/Register funcional con seeds
+- 👤 AuthContext global y persistencia
+- 🛡️ Protección rutas por autenticación
+- 🏷️ Control acceso por roles (admin/organizer/attendee)
+- 🔄 Navegación automática post-login
 - ⚡ Hot reload configurado para Replit

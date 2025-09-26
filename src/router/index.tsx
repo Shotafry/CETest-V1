@@ -2,12 +2,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LandingView from "../views/Landing/LandingView";
 import EventDetailView from "../views/Event/EventDetailView";
 import LoginView from "../views/Authentication/LoginView";
+import RegisterView from "../views/Authentication/RegisterView";
 import DashboardView from "../views/Dashboard/DashboardView";
 import AnalyticsView from "../views/Analytics/AnalyticsView";
 import SettingsView from "../views/Settings/SettingsView";
 import FontTester from "../views/FontTester";
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +18,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'dashboard',
-        element: <DashboardView />
+        element: (
+          <ProtectedRoute>
+            <DashboardView />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'analytics',
-        element: <AnalyticsView />
+        element: (
+          <ProtectedRoute requiredRole="organizer">
+            <AnalyticsView />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'settings',
-        element: <SettingsView />
+        element: (
+          <ProtectedRoute>
+            <SettingsView />
+          </ProtectedRoute>
+        )
       },
       {
         path: 'font-test',
@@ -47,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <LoginView />
+      },
+      {
+        path: 'register',
+        element: <RegisterView />
       }
     ]
   }
